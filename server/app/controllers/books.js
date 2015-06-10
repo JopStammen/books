@@ -1,8 +1,8 @@
-/** TODO: Test with static-analyzer */
+/*jslint node: true*/
+"use strict";
 
-/**
- * TODO: Define variables
- */
+var mongoose = require('mongoose'),
+    Book = mongoose.model('Book');
 /**
  * CREATE a book
  * --------------------
@@ -12,7 +12,21 @@
  * - Read about the 'save' method from Mongoose.
  * - Use the 'save' method from Mongoose.
  *   - Question: What are the differences between MongoDb and Mongoose?
+ *
+ *          MongoDb updates an existing document or inserts a new document, depending on its document parameter.
+ *
+ *          Mongoose saves this document.
+ *
  *   - Question: explain the concepts of 'schema type' and 'model'. How are they related?
+ *
+ *          SchemaTypes handle definition of path defaults,
+ *          validation, getters, setters, field selection defaults for queries and other general
+ *          characteristics for Strings and Numbers.
+ *
+ *          Models are fancy constructors compiled from our Schema definitions. Instances of these models
+ *          represent documents which can be saved and retreived from our database.
+ *          All document creation and retreival from the database is handled by these models.
+ *
  * - Return all fields.
  * - Use the model "Book".
  *
@@ -34,9 +48,25 @@
  * @see http://mongoosejs.com/docs/api.html#model_Model-save
  * @module books/create
  */
-/**
- * TODO: Create a CREATE document controller
- */
+exports.create = function (req, res) {
+
+ var doc = new Book(req.body);
+
+ doc.save(function(err) {
+
+  var retObj = {
+   meta:{"action": "create",
+       'timestamp': new Date(),
+       filename: __filename},
+   doc: doc,
+   err: err
+  };
+
+  return res.send(retObj);
+
+ });
+
+};
 
 /**
  * RETRIEVE _all_ books
@@ -72,9 +102,30 @@
  * @see http://mongoosejs.com/docs/api.html#model_Model.find
  * @module books/list
  */
-/**
- * TODO: Create a RETRIEVE all document controller
- */
+exports.list = function (req, res) {
+ var conditions, fields, sort;
+
+ conditions = {};
+ fields = {};
+ sort = {'modificationDate': -1};
+
+ Book
+     .find(conditions, fields)
+     .sort(sort)
+     .exec(function (err, doc) {
+
+      var retObj = {
+       meta:{"action": "list",
+        'timestamp': new Date(),
+        filename: __filename},
+       doc: doc,
+       err: err
+      };
+
+      return res.send(retObj);
+
+     });
+};
 
 /**
  * RETRIEVE _one_ book
@@ -109,9 +160,24 @@
  * @see http://docs.mongodb.org/manual/reference/method/db.collection.findOne/
  * @see http://mongoosejs.com/docs/api.html#model_Model.findOne
  */
-/**
- * TODO: Create a RETRIEVE 1 document controller
- */
+exports.detail = function (req, res) {
+   var conditions, fields;
+
+   conditions = {_id: req.params._id};
+   fields = {};
+
+   Book
+     .findOne(conditions, fields)
+     .exec(function (err, doc) {
+        var retObj = {
+           meta:{"action": "detail", 'timestamp': new Date(), filename: __filename},
+           doc: doc,
+           err: err
+        };
+        return res.send(retObj);
+
+     });
+};
 
 /**
  * UPDATE book
@@ -144,9 +210,25 @@
  * @see http://docs.mongodb.org/manual/reference/method/db.collection.save/
  * @see http://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
  */
- /**
-  * TODO: Create a UPDATE document controller
-  */
+exports.updateOne = function (req, res) {
+    var conditions = {_id: req.params._id},
+        update = {
+            title: req.body.title || '',
+            author: req.body.author || '',
+            description: req.body.description || ''
+        },
+        options = {multi: false},
+        callback = function (err, doc) {
+            var retObj = {
+                meta: {"action": "update", 'timestamp': new Date(), filename: __filename},
+                doc: doc,
+                err: err
+            };
+            return res.send(retObj);
+        };
+    Book
+        .findOneAndUpdate(conditions, update, options, callback);
+};
 
 /**
  * DELETE
@@ -188,6 +270,18 @@
  * @see http://docs.mongodb.org/manual/reference/method/db.collection.remove/
  * @see http://mongoosejs.com/docs/api.html#model_Model.remove
  */
-/**
- * TODO: Create a DELETE document controller
- */
+exports.deleteOne = function (req, res) {
+    var conditions, callback, retObj;
+
+    conditions = {_id: req.params._id};
+    callback = function (err, doc) {
+        retObj = {
+            meta: {"action": "delete", 'timestamp': new Date(), filename: __filename},
+            doc: doc,
+            err: err
+        };
+        return res.send(retObj);
+    };
+    Book
+        .remove(conditions, callback);
+};

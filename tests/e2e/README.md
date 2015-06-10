@@ -1,21 +1,21 @@
+
+
+
 # Install selenium standalone server
 
 
 ## Option: selenium-standalone
 It will install a selenium-standalone command line that will be able to install selenium server and start firefox, chrome, internet explorer or phantomjs for your tests.
 
-Install selenium standalone with (`sudo` is only for Linux and OSX)
-
+Install selenium standalone with
 ```
-sudo npm install -g selenium-standalone@latest
-```
-
-Install the selenium version with (`sudo` is only for Linux and OSX)
-
-```
-sudo selenium-standalone install --version=2.43.1
+npm install -g selenium-standalone@latest
 ```
 
+Install the selenium version with
+```
+selenium-standalone install --version=2.43.1
+```
 *Version 2.44 has issues. Use 2.43.1*
 
 Open a new terminal and run
@@ -33,27 +33,21 @@ Replace the version number with the actual version you have found on the site.
 
 Download selenium
 
-`curl -O http://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar`
+`wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar`
 
 Open a new terminal and run the webdriver / selenium hubs
-
 ```
-java -jar selenium-server-standalone-2.43.1.jar -role hub
+java -jar selenium-server-standalone-2.44.0.jar -role hub
 ```
 
 # Install phantomjs
 
-Install phantomjs with
-
-`sudo npm install -g phantomjs`
+Install phantomjs with `sudo npm install -g phantomjs`.
 
 Open a new terminal and run phantomjs with
-
 ```
 phantomjs --webdriver=4445 --webdriver-selenium-grid-hub=http://127.0.0.1:4444
-```
-
-(Port numbers are default.)
+```  (Port numbers are default.)
 
 
 
@@ -64,12 +58,12 @@ phantomjs --webdriver=4445 --webdriver-selenium-grid-hub=http://127.0.0.1:4444
 
 ### Install protractor global with
 ```
-sudo npm install -g protractor
+npm install -g protractor
 ```
 
 ### Run test
 ```
-protractor conf.js
+npm test
 ```
 
 ### References

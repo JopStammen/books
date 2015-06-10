@@ -1,14 +1,11 @@
 // Load configuration
 var env = process.env.NODE_ENV || 'development',
-    config = require('../../server/config/config.js')[env],
+    config = require('../../../server/config/config.js')[env],
     localConfig = require('./../config-test.json');
-
 
 describe('Book test homepage', function () {
 
-    beforeEach(function () {
-        browser.get('http://' + localConfig.host + ':' + config.port);
-    });
+    browser.get('http://' + localConfig.host + ':' + config.port);
 
     it('should get the titles', function () {
 
@@ -58,15 +55,12 @@ describe('Book test homepage', function () {
         expect(books.get(0).getText()).toEqual('THE GOLDFINCH, Donna Tartt');
 
     });
+
 });
 
 describe('CRUD on book', function () {
 
     var _id;
-
-    beforeEach(function () {
-        browser.get('http://' + localConfig.host + ':' + config.port + '/#/books/new');
-    });
 
     it('should get the titles', function () {
 
@@ -166,7 +160,7 @@ describe('CRUD on book', function () {
 
                 expect(element.all(by.repeater('book in books')).first().getText()).toBe('The Dreamer of the Snake, Ruan Mashander');
 
-                // browser.pause();
+                //browser.pause();
 
             });
 
@@ -198,4 +192,3 @@ describe('CRUD on book', function () {
 
 
 });
-
