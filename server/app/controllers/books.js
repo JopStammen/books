@@ -12,21 +12,7 @@ var mongoose = require('mongoose'),
  * - Read about the 'save' method from Mongoose.
  * - Use the 'save' method from Mongoose.
  *   - Question: What are the differences between MongoDb and Mongoose?
- *
- *          MongoDb updates an existing document or inserts a new document, depending on its document parameter.
- *
- *          Mongoose saves this document.
- *
  *   - Question: explain the concepts of 'schema type' and 'model'. How are they related?
- *
- *          SchemaTypes handle definition of path defaults,
- *          validation, getters, setters, field selection defaults for queries and other general
- *          characteristics for Strings and Numbers.
- *
- *          Models are fancy constructors compiled from our Schema definitions. Instances of these models
- *          represent documents which can be saved and retreived from our database.
- *          All document creation and retreival from the database is handled by these models.
- *
  * - Return all fields.
  * - Use the model "Book".
  *
@@ -50,22 +36,22 @@ var mongoose = require('mongoose'),
  */
 exports.create = function (req, res) {
 
- var doc = new Book(req.body);
+    var doc = new Book(req.body);
 
- doc.save(function(err) {
+    doc.save(function (err) {
 
-  var retObj = {
-   meta:{"action": "create",
-       'timestamp': new Date(),
-       filename: __filename},
-   doc: doc,
-   err: err
-  };
+        var retObj = {
+            meta: {
+                "action": "create",
+                'timestamp': new Date(),
+                filename: __filename
+            },
+            doc: doc,
+            err: err
+        };
 
-  return res.send(retObj);
-
- });
-
+        return res.send(retObj);
+    });
 };
 
 /**
@@ -103,28 +89,29 @@ exports.create = function (req, res) {
  * @module books/list
  */
 exports.list = function (req, res) {
- var conditions, fields, sort;
+    var conditions, fields, sort;
 
- conditions = {};
- fields = {};
- sort = {'modificationDate': -1};
+    conditions = {};
+    fields = {};
+    sort = {'modificationDate': -1};
 
- Book
-     .find(conditions, fields)
-     .sort(sort)
-     .exec(function (err, doc) {
+    Book
+        .find(conditions, fields)
+        .sort(sort)
+        .exec(function (err, doc) {
 
-      var retObj = {
-       meta:{"action": "list",
-        'timestamp': new Date(),
-        filename: __filename},
-       doc: doc,
-       err: err
-      };
+            var retObj = {
+                meta: {
+                    "action": "list",
+                    'timestamp': new Date(),
+                    filename: __filename
+                },
+                doc: doc,
+                err: err
+            };
 
-      return res.send(retObj);
-
-     });
+            return res.send(retObj);
+        });
 };
 
 /**
@@ -161,22 +148,27 @@ exports.list = function (req, res) {
  * @see http://mongoosejs.com/docs/api.html#model_Model.findOne
  */
 exports.detail = function (req, res) {
-   var conditions, fields;
+    var conditions, fields;
 
-   conditions = {_id: req.params._id};
-   fields = {};
+    conditions = {_id: req.params._id};
+    fields = {};
 
-   Book
-     .findOne(conditions, fields)
-     .exec(function (err, doc) {
-        var retObj = {
-           meta:{"action": "detail", 'timestamp': new Date(), filename: __filename},
-           doc: doc,
-           err: err
-        };
-        return res.send(retObj);
+    Book
+        .findOne(conditions, fields)
+        .exec(function (err, doc) {
 
-     });
+            var retObj = {
+                meta: {
+                    "action": "detail",
+                    'timestamp': new Date(),
+                    filename: __filename
+                },
+                doc: doc,
+                err: err
+            };
+
+            return res.send(retObj);
+        });
 };
 
 /**
@@ -211,7 +203,9 @@ exports.detail = function (req, res) {
  * @see http://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
  */
 exports.updateOne = function (req, res) {
-    var conditions = {_id: req.params._id},
+
+    var conditions =
+        {_id: req.params._id},
         update = {
             title: req.body.title || '',
             author: req.body.author || '',
@@ -220,12 +214,17 @@ exports.updateOne = function (req, res) {
         options = {multi: false},
         callback = function (err, doc) {
             var retObj = {
-                meta: {"action": "update", 'timestamp': new Date(), filename: __filename},
+                meta: {
+                    "action": "update",
+                    'timestamp': new Date(),
+                    filename: __filename
+                },
                 doc: doc,
                 err: err
             };
             return res.send(retObj);
         };
+
     Book
         .findOneAndUpdate(conditions, update, options, callback);
 };
@@ -276,12 +275,17 @@ exports.deleteOne = function (req, res) {
     conditions = {_id: req.params._id};
     callback = function (err, doc) {
         retObj = {
-            meta: {"action": "delete", 'timestamp': new Date(), filename: __filename},
+            meta: {
+                "action": "delete",
+                'timestamp': new Date(),
+                filename: __filename
+            },
             doc: doc,
             err: err
         };
         return res.send(retObj);
     };
+
     Book
         .remove(conditions, callback);
 };

@@ -1,7 +1,6 @@
 Description
 ===========
 This demo is MEAN with books.
-
 Video available at http://goo.gl/KswfXf
 
 Presentation available at http://goo.gl/idIiq3

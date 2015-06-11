@@ -8,10 +8,11 @@
  * @param booksService
  * @constructor
  */
+
 function BookListCtrl($scope, booksService) {
     "use strict";
-    // GET all books
-    $scrope.books = booksService.books.get();
+    //GET all books
+    $scope.books = booksService.books.get();
 }
 
 /**
@@ -24,7 +25,7 @@ function BookDetailCtrl($scope, $routeParams, $location, booksService) {
     "use strict";
     // GET 1 book
 
-    if ($routeParams._id !== 'o') {
+    if ($routeParams._id !== '0') {
         $scope.books = booksService.books.get({_id: $routeParams._id}, function () {
             console.log('$scope.requests ', $scope.requests);
         });
@@ -40,12 +41,10 @@ function BookDetailCtrl($scope, $routeParams, $location, booksService) {
     $scope.save = function () {
 
         if ($scope.books.doc && $scope.books.doc._id !== undefined) {
-            console.log('Entering update');
-            booksService.books.update({_id: $scope.books.doc._id}, $scope.books.doc, function () {
-                 console.log(res);
+            booksService.books.update({_id: $scope.books.doc._id}, $scope.books.doc, function (res) {
+                console.log(res);
             });
         } else {
-            console.log('Entering save');
             booksService.books.save({}, $scope.books.doc, function (res) {
                 console.log(res);
             });
@@ -55,5 +54,5 @@ function BookDetailCtrl($scope, $routeParams, $location, booksService) {
 
 myApp.controller('myCtrl', function ($scope) {
     "use strict";
-    // TODO: bind settings with whoami
+     $scope.whoami = "Jop"
 });

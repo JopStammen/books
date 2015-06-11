@@ -1,0 +1,52 @@
+Server
+Controllers - books.js
+ * - Use the 'save' method from Mongoose.
+ *   - Question: What are the differences between MongoDb and Mongoose?
+ *   - Question: explain the concepts of 'schema type' and 'model'. How are they related?
+
+  * Errors are not thrown in the node application but returned to the user.
+  * - Question: What will happen if you throw an error on the server?
+
+  * - Use the 'save' method from Mongoose.
+   *   - Question: What are the differences between MongoDb and Mongoose?
+   * - The 'query' parameter is an empty object.
+   *   - Question: Why is it empty?
+   * - Skip the options.
+   *   - Question: Describe the options.
+
+ Use the 'findOne' method from Mongoose.
+ *   - Question: What is de result object from findOne?
+ *   - Question: What are the differences between MongoDb and Mongoose?
+ * - The 'query' parameter is an empty object.
+ *   - Question: Why is it empty?
+
+  * - Use the model "Book".
+  * Question: Define route parameters and body parameter. What are the differences?
+
+   * - Use the 'findOneAndUpdate' method from Mongoose.
+   *   - Question: What are the differences between MongoDb and Mongoose?
+   *   - Question: What are the differences between MongoDb 'save' and MongoDb 'update'?
+   * - Return all fields.
+   * - Use the model "Book".
+   * Question: What changes should be made to update more than one document?
+
+
+Models - books.js
+
+ * - Question: What are the differences between a 'Schema Type' and a JSON object? Use the references to motivate your answer.
+ * - Question: What is the function of the 'collection' property?
+ * - Question: Suppose you have a model for 'Person'. What would be the default collection name?
+
+  * - Instruction: Add a validator for title. A title must have a length of at least 8 characters.
+  * - Question: There are four locations of validations, each for a specific type of validation. Give for each validation an example and describe why that location is the best location for that specific type of validation.
+  *   1. Database (technical constraints, primary key)
+  *   1. Schema (simple business rules)
+  *   1. Application (complex business rules)
+  *   1. Client-side (form validation)
+
+   * - Instruction: Create a model for the defined schema.
+   * - Question: What are the differences between a 'Model' and a 'Schema Type'? Use the references to motivate your answer.
+
+Client
+
+Tests

@@ -8,7 +8,7 @@
 var fs = require('fs'),
     http = require('http'),
     express = require('express'),
-    bodyParser = require('body-parser'),
+    bodyParser = require("body-parser"),
     env,
     config,
     mongoose,
@@ -23,7 +23,8 @@ var fs = require('fs'),
  * @type {*|string}
  */
 env = process.env.NODE_ENV || 'development';
-config = required('.config/config.js')[env];
+config = require('./config/config.js')[env];
+
 
 /**
  * Bootstrap db connection
@@ -36,9 +37,10 @@ mongoose.connect(config.db);
  * Debugging
  */
 mongoose.connection.on('error', function (err) {
-   console.error('MongoDB error: %s', err);
+    console.error('MongoDB error: %s', err);
 });
 mongoose.set('debug', config.debug);
+
 
 /**
  * Bootstrap models
@@ -47,7 +49,7 @@ mongoose.set('debug', config.debug);
 models_path = __dirname + '/app/models';
 model_files = fs.readdirSync(models_path);
 model_files.forEach(function (file) {
-   require(models_path + '/' + file);
+    require(models_path + '/' + file);
 });
 
 /**
@@ -80,7 +82,7 @@ if (config.debug) {
 /**
  * Middleware to serve static page
  */
-app.use(express.static(||dirname + '/../client'));
+app.use(express.static(__dirname + '/../client/'));
 
 /**
  * Bootstrap routes

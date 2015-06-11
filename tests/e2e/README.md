@@ -33,11 +33,11 @@ Replace the version number with the actual version you have found on the site.
 
 Download selenium
 
-`wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar`
+`wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.45.0.jar`
 
 Open a new terminal and run the webdriver / selenium hubs
 ```
-java -jar selenium-server-standalone-2.44.0.jar -role hub
+java -jar selenium-server-standalone-2.43.1.jar -role hub
 ```
 
 # Install phantomjs
